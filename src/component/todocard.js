@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
 	Card,
 	CardHeader,
@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { makeStyles } from "@mui/styles";
+import ModalComponent from "./modal";
 
 const useStyles = makeStyles({
 	cardAvatar: {
@@ -27,7 +28,17 @@ const useStyles = makeStyles({
 })
 
 const TodoCard = ({todo, handleDelete}) => {
+	const [openModal, setOpenModal] = useState(false)
 	const classes = useStyles(todo)
+
+	const handleClose = () => {
+		return setOpenModal(false)
+	}
+
+	const handleModalDelete = (todo) => {
+		handleDelete(todo.id)
+		return setOpenModal(false)
+	}
 
 	return (
 		<Card elevation={3}>
@@ -41,14 +52,16 @@ const TodoCard = ({todo, handleDelete}) => {
 				subheader={todo.priority}
 				action = {
 					<IconButton  
-						onClick={() => handleDelete(todo.id)}
+						onClick={() => setOpenModal(true)}
 						aria-label="delete">
 						<DeleteIcon />
 					</IconButton>
 				}
 			/>
+			<ModalComponent todo={todo} handleDelete={handleModalDelete} title={todo.title} close={handleClose} openModal={openModal}/>
 			<CardContent>
 				<Typography variant="body2">
+					{console.log(openModal)}
 					{todo.details}
 				</Typography>
 			</CardContent>

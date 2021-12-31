@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material"
+import { Container } from "@mui/material"
 import axios from "axios"
 import React, {useState, useEffect} from 'react'
 import TodoCard from "../component/todocard"
@@ -12,12 +12,15 @@ const breakpoints = {
 
 export default function Notes() {
 	const [todos, setTodos] = useState([])
+	const [openModal, setOpenModal] = useState(false)
+
 
 	useEffect(() => {
 		fetch("http://localhost:8080/todos")
 			.then(res => res.json())
 			.then(data => setTodos(data))
 			// .then
+
 	}, [todos])
 
 	const handleDelete = async (id) => {
@@ -39,7 +42,7 @@ export default function Notes() {
 				{
 					todos.map((todo, index) => (
 						<div key={index} item xs={12} md={6} lg={4} >
-							<TodoCard handleDelete={handleDelete} todo={todo}/>
+							<TodoCard handleDelete={handleDelete} todo={todo} openModal={openModal}/>
 						</div>
 					))
 				}

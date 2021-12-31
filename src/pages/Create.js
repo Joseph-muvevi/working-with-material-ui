@@ -60,13 +60,15 @@ export default function Create() {
 					priority: priority,
 				
 				}
-			}).then(history.push("/"))
+			})
+				.then(history.push("/"))
+				.catch(err => console.log(err))
+
 		}
 	}
 
 	return (
 		<div>
-			{/* {getElementTodosLength()} */}
 			<Container>
 				<Typography
 					variant="h6"
